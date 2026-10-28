@@ -1,18 +1,18 @@
 pipeline {
-    agent {
-        label '!windows'
-    }
-    options {
-        skipStagesAfterUnstable()
+    agent any
+    tools {
+        maven 'Maven-3'
     }
     stages {
-        stage('Build') {
+        stage('1. Build (CI)') {
             steps {
+                echo 'Compiling source code...'
                 sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('Test') {
+        stage('2. Test (CI)') {
             steps {
+                echo 'Running automated unit tests...'
                 sh 'mvn test'
             }
             post {
@@ -21,9 +21,10 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') { 
+        stage('3. Deliver (CD)') {
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                echo 'Deploying / running packaged application...'
+                sh 'chmod +x ./jenkins/scripts/deliver.sh && ./jenkins/scripts/deliver.sh'
             }
         }
     }

@@ -27,15 +27,6 @@ pipeline {
                 sh 'chmod +x ./jenkins/scripts/deliver.sh && ./jenkins/scripts/deliver.sh'
             }
         }
-        stage('4. QA Approval -> Deploy to PROD') {
-            input {
-                message "QA Team: Does the build pass manual testing in QA?"
-                ok "Yes, Deploy to Production!"
-            }
-            steps {
-                echo 'QA Approved! Deploying to Production Environment (ENV = PROD)...'
-            }
-        }
 
     }
 }

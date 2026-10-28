@@ -21,11 +21,21 @@ pipeline {
                 }
             }
         }
-        stage('3. Deliver (CD)') {
+        tage('3. Deploy to QA (Test Env)') {
             steps {
-                echo 'Deploying / running packaged application...'
+                echo 'Deployed build to QA Environment (ENV = TEST)'
                 sh 'chmod +x ./jenkins/scripts/deliver.sh && ./jenkins/scripts/deliver.sh'
             }
         }
+        stage('4. QA Approval -> Deploy to PROD') {
+            input {
+                message "QA Team: Does the build pass manual testing in QA?"
+                ok "Yes, Deploy to Production!"
+            }
+            steps {
+                echo 'QA Approved! Deploying to Production Environment (ENV = PROD)...'
+            }
+        }
+
     }
 }

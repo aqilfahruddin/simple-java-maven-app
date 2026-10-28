@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-        tage('3. Deploy to QA (Test Env)') {
+        stage('3. Deploy to QA (Test Env)') {
             steps {
                 echo 'Deployed build to QA Environment (ENV = TEST)'
                 sh 'chmod +x ./jenkins/scripts/deliver.sh && ./jenkins/scripts/deliver.sh'
